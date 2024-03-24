@@ -1,3 +1,5 @@
+package com.lhvsofteng.java.sandbox;
+
 import java.util.Scanner;
 
 import static java.lang.System.in;
@@ -10,7 +12,7 @@ public class Fibonacci {
         long time = 0;
         int result = 0;
 
-        out.println("Calculate Fibonacci");
+        out.println("Calculate com.lhvsofteng.java.sandbox.Fibonacci");
         do {
             out.println("Insert a number: ");
             
@@ -18,18 +20,18 @@ public class Fibonacci {
 
             // time = System.currentTimeMillis();
             // result = fibonacciRecursive(inputNumber);
-            // out.println("Fibonacci: " + result);
+            // out.println("com.lhvsofteng.java.sandbox.Fibonacci: " + result);
             // out.println("Recursive Time: " + (System.currentTimeMillis() - time));
 
             // time = System.currentTimeMillis();
             // result = fibonacciIterative(inputNumber);
-            // out.println("Fibonacci: " + result);
+            // out.println("com.lhvsofteng.java.sandbox.Fibonacci: " + result);
             // out.println("Iteractive Time: " + (System.currentTimeMillis() - time));
 
             int[] memo = new int[inputNumber];
             time = System.currentTimeMillis();
             result = fibonacciRecursiveWithMemoaization(inputNumber, memo);
-            out.println("Fibonacci: " + result);
+            out.println("com.lhvsofteng.java.sandbox.Fibonacci: " + result);
             out.println("Recursive with Memo Time: " + (System.currentTimeMillis() - time));
 
 

@@ -1,3 +1,5 @@
+package com.lhvsofteng.java.sandbox;
+
 import java.util.Arrays;
 
 public class TempCloseToZero {

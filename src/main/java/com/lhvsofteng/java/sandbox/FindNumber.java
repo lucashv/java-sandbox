@@ -1,8 +1,10 @@
+package com.lhvsofteng.java.sandbox;
+
 import java.util.Arrays;
 
 public class FindNumber {
     public static void main(String[] a) {
-        int[] ints = new int[1000000]; // {-9, 14, 37, 102};
+        int[] ints = new int[1000]; // {-9, 14, 37, 102};
 
         for (int i = 0; i < ints.length; i++) {
             double rand = Math.random();
