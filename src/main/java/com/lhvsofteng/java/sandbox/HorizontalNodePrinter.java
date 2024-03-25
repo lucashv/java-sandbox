@@ -4,27 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HorizontalNodePrinter {
+
+    // For a graph like:
+    //            A
+    //          /   \
+    //        B        C
+    //      /   \    /
+    //     D     E  F
+    //   /   \
+    // G      H
+    // It prints ABCDEFGH
     public static void main(String[] args) {
         System.out.println("Hello!");
         Node a = initNodes();
-        oldSolution(a);
+        printNodes(a);
     }
 
     private static void printNodes(final Node node) {
-        System.out.print(node.value);
-        if (node.left != null && !node.left.isEmpty()) {
-            for (Node n : node.left) {
-                System.out.print(n.value);
-            }
-        }
-        if (node.right != null && !node.right.isEmpty()) {
-            for (Node n : node.right) {
-                System.out.print(n.value);
-            }
-        }
-    }
-
-    private static void oldSolution(final Node node) {
         System.out.print(node.value);
 
         List<Node> children = new ArrayList<>();
@@ -40,6 +36,20 @@ public class HorizontalNodePrinter {
                     children.addAll(n.left);
                 if (n.right != null)
                     children.addAll(n.right);
+            }
+        }
+    }
+
+    private static void printNodes2(final Node node) {
+        System.out.print(node.value);
+        if (node.left != null && !node.left.isEmpty()) {
+            for (Node n : node.left) {
+                System.out.print(n.value);
+            }
+        }
+        if (node.right != null && !node.right.isEmpty()) {
+            for (Node n : node.right) {
+                System.out.print(n.value);
             }
         }
     }
