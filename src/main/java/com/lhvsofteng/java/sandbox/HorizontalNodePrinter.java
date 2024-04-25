@@ -1,23 +1,53 @@
 package com.lhvsofteng.java.sandbox;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+// For a graph like:
+//            A
+//          /   \
+//        B        C
+//      /   \    /
+//     D     E  F
+//   /   \
+// G      H
+// It prints ABCDEFGH
 public class HorizontalNodePrinter {
-
-    // For a graph like:
-    //            A
-    //          /   \
-    //        B        C
-    //      /   \    /
-    //     D     E  F
-    //   /   \
-    // G      H
-    // It prints ABCDEFGH
     public static void main(String[] args) {
         System.out.println("Hello!");
-        Node a = initNodes();
-        printNodes(a);
+        //Node a = initNodes();
+        //printNodes(a);
+
+        int[] ints = someThing(new String[] { "the", "dog", "got", "the", "bone" });
+
+        for (int i : ints) {
+            System.out.println("-> " + i);
+        }
+
+        int x = (4 >> 1);
+        System.out.println(" ----> " + x);
+    }
+
+    private static int[] someThing(String[] words) {
+        Map<String, Integer> w = new TreeMap<>();
+        for (String s : words) {
+            if (!w.containsKey(s)) {
+                w.put(s, 1);
+            } else {
+                w.put(s, w.get(s) + 1);
+            }
+        }
+
+        List<Integer> idx = new ArrayList<>();
+        for (Map.Entry<String, Integer> e : w.entrySet()) {
+            idx.add(e.getValue());
+        }
+
+        int[] x = new int[idx.size()];
+        for (int i = 0; i < idx.size(); i++) {
+            x[i] = idx.get(i);
+        }
+
+        return x;
     }
 
     private static void printNodes(final Node node) {
