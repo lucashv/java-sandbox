@@ -1,8 +1,7 @@
 package com.lhvsofteng.java.sandbox;
 
-import java.util.Map;
-
 import java.util.HashMap;
+import java.util.Map;
 
 public class AlienAlphabet {
     // For a give alien alphabet
@@ -32,7 +31,7 @@ public class AlienAlphabet {
                 if (idxFirstWord == idxSecondWord)
                     continue;
 
-                if (idxFirstWord <= idxSecondWord)
+                if (idxFirstWord < idxSecondWord)
                     break;
                 else
                     return false;

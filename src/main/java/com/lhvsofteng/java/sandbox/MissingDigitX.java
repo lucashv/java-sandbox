@@ -1,16 +1,36 @@
 package com.lhvsofteng.java.sandbox;
 
-import java.util.*; 
-import java.io.*;
-
 public class MissingDigitX {
 
+  public static void main(String[] args) {
+    // keep this function call here
+    // Scanner s = new Scanner(System.in);
+    String[] inputs =
+        new String[] {
+          "4 - 2 = x",
+          "1x0 * 12 = 1200",
+          "3x + 12 = 46",
+          "x - 20 = 30",
+          "24 / 1x = 2",
+          "1x * 3 = 30",
+          "1x * 2 = 30",
+        };
+
+    System.out.println("====");
+    for (String s : inputs) {
+      var x = MissingDigit(s);
+      System.out.println(x);
+      System.out.println(s.replace("x", x));
+      System.out.println("====");
+    }
+  }
+
   public static String MissingDigit(String str) {
-    String operation = findOperation(str);
-    String[] terms = findTerms(str);
-    String rightSide = findRightSide(str);
-    Integer valueOfX = 0;
-    String a = "";
+    var operation = findOperation(str);
+    var terms = findTerms(str);
+    var rightSide = findRightSide(str);
+    var valueOfX = 0;
+    var a = "";
 
     if (rightSide.contains("x")) {
       a = rightSide;
@@ -22,51 +42,43 @@ public class MissingDigitX {
     }
     if (terms[1].contains("x")) {
       a = terms[1];
-      valueOfX = executeOperation(rightSide, terms[0], getOppositeOperation(operation));
+      if (operation.equals("/")) {
+        valueOfX = executeOperation(terms[0], rightSide, operation);
+      } else {
+        valueOfX = executeOperation(rightSide, terms[0], getOppositeOperation(operation));
+      }
     }
 
-    String result = String.valueOf(a.length() == 1 ? valueOfX.toString() : valueOfX.toString().charAt(a.indexOf("x")));
-
-    return result;
+    return String.valueOf(
+        a.length() == 1
+            ? valueOfX
+            : Character.toString(Integer.toString(valueOfX).charAt(a.indexOf("x"))));
   }
-  
+
   private static String getOppositeOperation(String operation) {
-    if (operation.equals("*")) {
-      return "/";
-    }
-    if (operation.equals("/")) {
-      return "*";
-    }
-    if (operation.equals("+")) {
-      return "-";
-    }
-    if (operation.equals("-")) {
-      return "+";
-    }
-    throw new RuntimeException("No operation");
+    return switch (operation) {
+      case "*" -> "/";
+      case "/" -> "*";
+      case "+" -> "-";
+      case "-" -> "+";
+      default -> throw new RuntimeException("No operation");
+    };
   }
 
-  private static Integer executeOperation(String sterm1, String sterm2, String operation) {
-    Integer term1 = Integer.parseInt(sterm1);
-    Integer term2 = Integer.parseInt(sterm2);
-
-    if (operation.equals("-")) {
-      return term1 - term2;
-    }
-    if (operation.equals("+")) {
-      return term1 + term2;
-    }
-    if (operation.equals("*")) {
-      return term1 * term2;
-    }
-    if (operation.equals("/")) {
-      return term1 / term2;
-    }
-    throw new RuntimeException("No operation");
+  private static int executeOperation(String sterm1, String sterm2, String operation) {
+    int term1 = Integer.parseInt(sterm1);
+    int term2 = Integer.parseInt(sterm2);
+    return switch (operation) {
+      case "-" -> term1 - term2;
+      case "+" -> term1 + term2;
+      case "*" -> term1 * term2;
+      case "/" -> term1 / term2;
+      default -> throw new RuntimeException("No operation");
+    };
   }
 
   private static String[] findTerms(String str) {
-    String[] signs = new String[] { "+", "-", "*", "/" };
+    String[] signs = new String[] {"+", "-", "*", "/"};
     for (String sign : signs) {
       if (str.contains(sign)) {
         String[] terms = str.split("\\" + sign);
@@ -79,7 +91,7 @@ public class MissingDigitX {
   }
 
   private static String findOperation(String str) {
-    String[] signs = new String[] { "+", "-", "*", "/" };
+    String[] signs = new String[] {"+", "-", "*", "/"};
     for (String sign : signs) {
       if (str.contains(sign)) {
         return sign;
@@ -91,21 +103,4 @@ public class MissingDigitX {
   private static String findRightSide(String str) {
     return str.split("=")[1].trim();
   }
-
-  public static void main (String[] args) {  
-    // keep this function call here     
-    // Scanner s = new Scanner(System.in);
-    String[] inputs = new String[] {
-      "4 - 2 = x",
-      "1x0 * 12 = 1200",
-      "3x + 12 = 46",
-      "x - 20 = 30"
-    };
-
-    System.out.println("====");
-    for (String s : inputs) {
-      System.out.println(MissingDigit(s)); 
-    }
-  }
-
 }
