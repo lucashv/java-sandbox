@@ -33,18 +33,18 @@ public class SlidingPuzzle {
   private static final String X = "x";
 
   public static void main(String[] args) {
-    //    var board =
-    //        new String[][] {
-    //          {"1", "2", "3"},
-    //          {"4", "x", "6"},
-    //          {"7", "5", "8"}
-    //        };
     var board =
         new String[][] {
-          {"4", "8", "6"},
-          {"3", "5", "2"},
-          {"1", "x", "7"}
+          {"1", "2", "3"},
+          {"4", "x", "6"},
+          {"7", "5", "8"}
         };
+    //    var board =
+    //        new String[][] {
+    //          {"8", "1", "6"},
+    //          {"x", "7", "3"},
+    //          {"5", "2", "4"}
+    //        };
     var boardState = slidingPuzzle(board);
 
     if (boardState != null) {
@@ -53,6 +53,7 @@ public class SlidingPuzzle {
       printBoard(boardState.board);
       out.println("Steps: " + boardState.qtyMoves);
       out.println("Moves: " + boardState.moveNames);
+      boardState.printBoardStates();
     } else {
       out.println("Not possible to sort");
     }
@@ -65,20 +66,20 @@ public class SlidingPuzzle {
     var flattenBoard = flattenSb.toString();
 
     if (TARGET.equals(flattenBoard)) {
-      return new BoardState(flattenBoard, 0, 0, List.of());
+      return new BoardState(flattenBoard, 0, 0, List.of(), List.of(flattenBoard));
     }
 
     var xPos = flattenBoard.indexOf(X);
     var que = new LinkedList<BoardState>();
     var seen = new HashSet<String>();
 
-    que.add(new BoardState(flattenBoard, xPos, 0, new ArrayList<>()));
+    que.add(new BoardState(flattenBoard, xPos, 0, new ArrayList<>(), List.of(flattenBoard)));
     seen.add(flattenBoard);
 
     while (!que.isEmpty()) {
       var boardState = que.poll();
 
-      printBoard(boardState.board);
+      // printBoard(boardState.board);
       // out.println("boardState = " + boardState.board);
       // out.println("xPos = " + boardState.xPos);
       // out.println("Steps = " + steps);
@@ -94,11 +95,15 @@ public class SlidingPuzzle {
           seen.add(newBoardStr);
           var newMoves = new ArrayList<>(boardState.moveNames);
           newMoves.add(getMove(boardState.xPos, newPos));
-          que.add(new BoardState(newBoardStr, newPos, boardState.qtyMoves + 1, newMoves));
+          var newBoardStates = new ArrayList<>(boardState.boardStates);
+          newBoardStates.add(newBoardStr);
+          que.add(
+              new BoardState(
+                  newBoardStr, newPos, boardState.qtyMoves + 1, newMoves, newBoardStates));
         }
       }
-      out.println();
-      out.println("===============================================================");
+      //      out.println();
+      //      out.println("===============================================================");
     }
 
     return null;
@@ -127,5 +132,26 @@ public class SlidingPuzzle {
     }
   }
 
-  private record BoardState(String board, int xPos, int qtyMoves, List<String> moveNames) {}
+  private record BoardState(
+      String board, int xPos, int qtyMoves, List<String> moveNames, List<String> boardStates) {
+    public void printBoardStates() {
+      final var cols = 23;
+      var inlineStates = new String[3][cols];
+
+      for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < cols; j++) {
+          var state = boardStates.get(j % 23);
+          var fromIdx = i * 3;
+          inlineStates[i][j] = state.substring(fromIdx, fromIdx + 3);
+        }
+      }
+
+      for (var i = 0; i < inlineStates.length; i++) {
+        for (var j = 0; j < inlineStates[0].length; j++) {
+          out.print(inlineStates[i][j] + (i == 1 ? " -> " : "    "));
+        }
+        out.println();
+      }
+    }
+  }
 }
