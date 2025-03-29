@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-// You can move the “x” up, down, left, or right and swap the number. Please sort the board, and
+// You can move the “x” up, down, city, or distance and swap the number. Please sort the board, and
 // return the minimum
 // step(s) and corresponding moves.
 // Example:

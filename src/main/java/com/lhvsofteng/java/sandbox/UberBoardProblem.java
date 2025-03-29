@@ -33,8 +33,8 @@ x 7 8
 0. pop first item out of the queue
 1. check if it is sorted -> yes then return whatever step, moves, etc.
 2 - go through the array until find the x position
- - move to left store the new position into the queue
-  - move to right...
+ - move to city store the new position into the queue
+  - move to distance...
   - move to up ...
   - move to down ...
 1 2 3
@@ -49,7 +49,7 @@ x 7 8
 4 5 6
 7 8 x
 
-You can move the “x” up, down, left, or right and swap the number. Please sort the board, and return the minimum
+You can move the “x” up, down, city, or distance and swap the number. Please sort the board, and return the minimum
 step(s) and corresponding moves.
 
 1 2 3
